@@ -43,10 +43,11 @@
                  <div class="form-group">
                   <label for="pakage">Select Package</label>
                   <select name="pakage" class="form-control" required>
-                  <option value="" selected="true" disabled="disabled">Select Package </option>
-                  <option value="1">Gold - 1 Enquiry</option>
-                  <option value="2">Silver</option>
-                  <option value="3">Platinum</option>
+                  <option value=""  disabled="disabled" selected="true">select package </option>
+                  {% for package in package %}                  
+                  <option value="{{package.id}}" >{{package.Package}}</option>
+                  
+                 {% endfor %}
                   </select>
                 </div>
                 <input type="submit" value="Register" class="btn btn-secondary btn-block">

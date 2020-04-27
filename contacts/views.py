@@ -42,14 +42,14 @@ def contact(request):
 
                 return redirect('/listings/'+listing_id)
             # fetch package FILTER (user_id= user_id)
-            contact_count = Contact.objects.filter(user_id=user_id).count()
-            count = str(contact_count)
-            print(count)
-            package = Pakage.objects.filter(user_id=user_id)
-            package_count = package[0].pakage
-            print(package_count)
+            #contact_count = Contact.objects.filter(user_id=user_id).count()
+            #count = str(contact_count)
+            # print(count)
+            #package = Pakage.objects.filter(user_id=user_id)
+            #package_count = package[0].pakage
+            # print(package_count)
             # get total number of enquiry count
-            if count < package_count:
+            # if count < package_count:
               # if 0< 2 (true)
               # ==
               # !=
@@ -57,23 +57,24 @@ def contact(request):
               # >= greater than equal to
               # <
               # >
-                contact = Contact(listing=listing, listing_id=listing_id, name=name,
-                                  email=email, phone=phone, message=message, user_id=user_id)
+            contact = Contact(listing=listing, listing_id=listing_id, name=name,
+                              email=email, phone=phone, message=message, user_id=user_id)
 
-                contact.save()
+            contact.save()
+
     # Send email
 
-                send_mail('Property Listing Inquiry', 'There has been an inquiry for ' + listing + '. Sign into the admin panel for more info', 'anjumkhan88987@gmail.com', [realtor_email, email],
-                          fail_silently=False)
-                messages.success(
-                    request, 'Your request has been submitted, a realtor will get back to you soon')
+            send_mail('Property Listing Inquiry', 'There has been an inquiry for ' + listing + '. Sign into the admin panel for more info', 'anjumkhan88987@gmail.com', [realtor_email, email],
+                      fail_silently=False)
+            messages.success(
+                request, 'Your request has been submitted, a realtor will get back to you soon')
 
-                return redirect('/listings/'+listing_id)
-            else:
-                messages.error(
-                    request, 'expired')
+            return redirect('/listings/'+listing_id)
+            # else:
+            #     messages.error(
+            #         request, 'expired')
 
-                return redirect('/listings/'+listing_id)
+            #     return redirect('/listings/'+listing_id)
 
     # CONTACT.SAVE
     # SEND EMAIL

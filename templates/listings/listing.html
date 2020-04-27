@@ -166,7 +166,17 @@
                 </div>
               </div>
               {% if user.is_authenticated %}
+              {% if count < package_count %}
               <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#inquiryModal">Make An Inquiry</button>
+              {% else %}
+        
+              <div class="alert alert-info text-center" role="alert">
+              <strong>
+              Info!
+              </strong>
+              Your account expired please upgrade
+            </div>
+              {% endif %}
              
              {% else %}             
               <a style="text-decoration:none" href="{% url 'login' %}" class="btn-primary btn-block btn-lg">Make An Inquiry</a>               
@@ -187,7 +197,7 @@
 
         <div class="modal-header">
 
-          <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry</h5>
+          <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry Form</h5>
 
           <button type="button" class="close" data-dismiss="modal">
 

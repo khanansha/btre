@@ -1,4 +1,3 @@
-
 from .choices import select_package
 from django.contrib.auth.decorators import login_required
 from django.utils.encoding import force_bytes, force_text
@@ -11,12 +10,11 @@ from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
 from django.contrib import messages, auth
-
 from django.contrib.auth.models import User
 from contacts.models import Contact
-from.models import Pakage
+from .models import Pakage, Package
+
 
 # Create your views here.
 
@@ -24,6 +22,7 @@ from.models import Pakage
 def register(request):
     if request.user.is_authenticated:
         return redirect('/')
+    # package = package.objects.all()
     if request.method == 'POST':
 
         # Get form values
@@ -42,7 +41,7 @@ def register(request):
 
         pakage = request.POST['pakage']
 
-    # Check if passwords match
+        # Check if passwords match
 
         if password == password2:
             # Check username
@@ -84,7 +83,9 @@ def register(request):
 
     else:
 
-        return render(request, 'accounts/register.html')
+        package = Package.objects.all()
+
+        return render(request, 'accounts/register.html', {'package': package})
 
 
 def login(request):
@@ -125,7 +126,6 @@ def logout(request):
 
 
 def dashboard(request):
-
     user_contacts = Contact.objects.order_by(
         '-contact_date').filter(user_id=request.user.id)
 
@@ -154,7 +154,7 @@ def rest_password(request):
             # html_content = 'Please activate your account <a href="http://' + \
             # current_site.domain + '/activate_email?e='+to+'" target="_blank">Click here</a>'
             html_content = ' Hii your new password is ' + \
-                randotp + ' now you can login with this password'
+                           randotp + ' now you can login with this password'
             msg = EmailMultiAlternatives(
                 subject, text_content, from_email, [to])
             msg.attach_alternative(html_content, "text/html")
@@ -162,19 +162,19 @@ def rest_password(request):
 
             messages.success(
                 request, 'we have sent you an email please follow the instructions')
-            context = {
-                'select_package': select_package
-            }
+            # context = {
+            #  'select_package': select_package
+            # }
             return redirect('login')
         else:
             messages.error(request, 'Invaild email')
             return redirect('rest_password')
+
     return render(request, 'accounts/forget_password.html')
 
+# def package(request):
+# context = {
+# 'select_package': select_package
+# }
 
-def package(request):
-    context = {
-        'select_package': select_package
-    }
-
-    return render(request, 'accounts/register.html', context)
+# return render(request, 'accounts/register.html', context)
